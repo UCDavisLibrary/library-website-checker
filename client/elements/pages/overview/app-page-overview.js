@@ -24,7 +24,11 @@ export default class AppPageOverview extends LitElement {
       let info = APP_CONFIG.data.diff[pathname];
       pages.push({
         pathname,
-        maxScore : Math.max(info.desktop.differences, info.tablet.differences, info.mobile.differences),
+        maxScore : Math.max(
+          info.desktop.differences/info.desktop.dimension, 
+          info.tablet.differences/info.desktop.dimension, 
+          info.mobile.differences/info.desktop.dimension
+        ),
         desktop : info.desktop,
         tablet : info.tablet,
         mobile : info.mobile
