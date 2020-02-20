@@ -39,6 +39,17 @@ export default class AppPageOverview extends LitElement {
     this.pages = pages;
   }
 
+  _inspect(e) {
+    let url = e.currentTarget.getAttribute('url');
+    let device = e.currentTarget.getAttribute('device');
+    let pathname = e.currentTarget.getAttribute('pathname');
+
+    this.dispatchEvent(new CustomEvent('inspect', {detail: {
+      url,
+      title: device+' - '+pathname
+    }}))
+  }
+
 }
 
 customElements.define('app-page-overview', AppPageOverview);

@@ -22,6 +22,10 @@ return html`
   table td {
     padding: 5px 15px;
   }
+  a {
+    color: blue;
+    cursor: pointer;
+  }
 </style>  
 
 <div class="layout">
@@ -41,15 +45,27 @@ return html`
             <a href="${this.config.serverB.baseUrl}${item.pathname}" target="_blank">${this.config.serverB.name}</a>
           </td>
           <td>
-            <a href="https://storage.googleapis.com/website-diffs/${this.name}/diff${item.pathname}/desktop.png" target="_blank">Diff</a>
+            <a 
+              @click="${this._inspect}" 
+              device="Desktop"
+              pathname="${item.pathname}"
+              url="https://storage.googleapis.com/website-diffs/${this.name}/diff${item.pathname}/desktop.png" target="_blank">Inspect</a>
             <span>Error: %${((item.desktop.differences/item.desktop.dimension)*100).toFixed(2)}</span>
           </td>
           <td>
-            <a href="https://storage.googleapis.com/website-diffs/${this.name}/diff${item.pathname}/tablet.png" target="_blank">Diff</a>
+            <a 
+              @click="${this._inspect}" 
+              device="Tablet"
+              pathname="${item.pathname}"
+              url="https://storage.googleapis.com/website-diffs/${this.name}/diff${item.pathname}/tablet.png" target="_blank">Inspect</a>
             <span>Error: %${((item.tablet.differences/item.tablet.dimension)*100).toFixed(2)}</span>
           </td>
           <td>
-            <a href="https://storage.googleapis.com/website-diffs/${this.name}/diff${item.pathname}/mobile.png" target="_blank">Diff</a>
+            <a
+              @click="${this._inspect}" 
+              device="Mobile"
+              pathname="${item.pathname}" 
+              url="https://storage.googleapis.com/website-diffs/${this.name}/diff${item.pathname}/mobile.png" target="_blank">Inspect</a>
             <span>Error: %${((item.mobile.differences/item.mobile.dimension)*100).toFixed(2)}</span>
           </td>
         </tr>

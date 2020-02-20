@@ -26,6 +26,16 @@ export default class LibrarySiteChecker extends LitElement {
     }
   }
 
+  _onInspect(e) {
+    let {title, url} = e.detail;
+    this.page = 'inspect';
+    this.shadowRoot.querySelector('[page="inspect"]').show(title, url);
+  }
+
+  _onBack() {
+    this.page = 'overview';
+  }
+
 }
 
 customElements.define('library-site-checker', LibrarySiteChecker);
