@@ -8,7 +8,8 @@ export default class AppPageOverview extends LitElement {
     return {
       pages : {type: Array},
       config : {type: Object},
-      name : {type: String}
+      name : {type: String},
+      date : {type: Number}
     }
   }
 
@@ -16,12 +17,25 @@ export default class AppPageOverview extends LitElement {
     super();
     this.render = render.bind(this);
 
-    this.config = APP_CONFIG.data.config;
+    if( APP_CONFIG.data.type === 'list' ) {
+      this.pages = [];
+      this.name = '';
+      this.config = {
+        serverA : {},
+        serverB : {}
+      };
+      this.date = 0;
+      return;
+    }
+
+    let data = APP_CONFIG.data.results;
+    this.date = data.timestamp;
+    this.config = data.config;
     this.name = this.config.name.replace(/ /g, '-');
 
     let pages = [];
-    for( let pathname in APP_CONFIG.data.diff ) {
-      let info = APP_CONFIG.data.diff[pathname];
+    for( let pathname in data.diff ) {
+      let info = data.diff[pathname];
       pages.push({
         pathname,
         maxScore : Math.max(

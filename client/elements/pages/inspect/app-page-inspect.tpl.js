@@ -16,9 +16,10 @@ return html`
     border: 1px solid #ccc;
   }
 
-  a {
-    color: blue;
+  a, a:visited {
+    color: var(--link-color);
     cursor: pointer;
+    text-decoration: underline;
   }
 
   .layout {
@@ -36,8 +37,6 @@ return html`
 <div class="layout">
   <div style="margin:5px"><a @click="${this._back}">Back</a></div>
   <h2 style="margin-left:5px">${this.title} <small ?hidden="${!this.loading}">Loading...</small></h2>
-
-  
 
   <div id="viewer" style="flex: 1"></div>
 </div>

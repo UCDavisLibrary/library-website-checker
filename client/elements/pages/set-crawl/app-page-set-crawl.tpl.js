@@ -14,13 +14,20 @@ return html`
     justify-content: center;
     display: flex;
   }
+  a, a:visited {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: underline;
+  }
 </style> 
 
 <div class="layout">
   <div>
-    <div>Please enter name of crawl to view:</div>
+    <div>Select Run to view:</div>
     <div>
-      <input type="text" id="crawl-name" /> <button @click="${this._onBtnClick}">Go</button>
+      ${this.runs.map(name => html`
+        <div><a href="/?name=${encodeURIComponent(name)}">${name}</a></div>
+      `)}
     </div>
   </div>
 </div>

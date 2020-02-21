@@ -19,7 +19,12 @@ export default class LibrarySiteChecker extends LitElement {
     super();
     this.render = render.bind(this);
 
-    if( APP_CONFIG.data && !APP_CONFIG.data.error ) {
+    if( APP_CONFIG.data.results.error ) {
+      console.error(APP_CONFIG.data.results);
+      return alert(APP_CONFIG.data.results.message);
+    }
+
+    if( APP_CONFIG.data.type !== 'list' ) {
       this.page = 'overview';
     } else {
       this.page = 'set-crawl';
@@ -32,7 +37,7 @@ export default class LibrarySiteChecker extends LitElement {
     this.shadowRoot.querySelector('[page="inspect"]').show(title, url);
   }
 
-  _onBack() {
+  _onInspectBack() {
     this.page = 'overview';
   }
 

@@ -6,13 +6,19 @@ export default class AppPageSetCrawl extends LitElement {
 
   static get properties() {
     return {
-      
+      runs : []
     }
   }
 
   constructor() {
     super();
     this.render = render.bind(this);
+
+    if( APP_CONFIG.data.type === 'list' ) {
+      this.runs = APP_CONFIG.data.results.map(name => name.replace(/\/$/, ''));
+    } else {
+      this.runs = [];
+    }
   }
 
   _onBtnClick() {

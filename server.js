@@ -26,8 +26,17 @@ spaMiddleware({
   isRoot : true,
   appRoutes : ['/'],
   getConfig : async (req, res, next) => {
+    let data = {};
+    if( req.query.name ) {
+      data.type = 'run';
+      data.results = await getData(req.query.name);
+    } else {
+      data.type = 'list';
+      data.results = await listRuns();
+    }
+
     next({
-      data : req.query.name ? (await getData(req.query.name)) : null,
+      data,
       appRoutes : ['/'],
     });
   },
@@ -42,6 +51,27 @@ async function getData(name) {
   try {
     let resp = await fetch(url);
     return await resp.json();
+  } catch(e) {
+    let text = '';
+    try { text = resp.text() }
+    catch(e) {};
+
+    return {
+      error: true,
+      message : e.message,
+      stack : e.stack,
+      url,
+      body : text
+    }
+  }
+}
+
+async function listRuns() {
+  let url = `https://storage.googleapis.com/storage/v1/b/website-diffs/o?delimiter=%2F&_=${Date.now()}`;
+  let resp;
+  try {
+    let resp = await fetch(url);
+    return (await resp.json()).prefixes || [];
   } catch(e) {
     let text = '';
     try { text = resp.text() }
