@@ -11,9 +11,10 @@ if( !fs.existsSync(path.join(__dirname, 'service-account.json')) ) {
 }
 
 const Crawler = require('./lib/crawler');
-let crawler = new Crawler();
+let crawler = new Crawler(true);
 crawler.run()
   .then(() => {
     console.log('crawl completed');
-    crawler.browser.close()
+    process.exit();
+    // crawler.browser.close()
   });
