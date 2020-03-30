@@ -36,16 +36,18 @@ export default class AppPageOverview extends LitElement {
     let pages = [];
     for( let pathname in data.diff ) {
       let info = data.diff[pathname];
+      let desktop = info.desktop || {};
+      let tablet = info.tablet || {};
+      let mobile = info.mobile || {};
+
       pages.push({
         pathname,
         maxScore : Math.max(
-          info.desktop.differences/info.desktop.dimension, 
-          info.tablet.differences/info.desktop.dimension, 
-          info.mobile.differences/info.desktop.dimension
+          desktop.differences/desktop.dimension, 
+          tablet.differences/desktop.dimension, 
+          mobile.differences/desktop.dimension
         ),
-        desktop : info.desktop,
-        tablet : info.tablet,
-        mobile : info.mobile
+        desktop, tablet, mobile
       });
     }
     pages.sort((a, b) => a.maxScore > b.maxScore ? -1 : 1);
